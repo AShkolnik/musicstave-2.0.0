@@ -2,6 +2,6 @@
 
 # This just simply runs the skeleton toolkits main function
 
-from gamera.toolkits.skeleton import main
+from gamera.toolkits.musicstaves import main
 
 main.main()
