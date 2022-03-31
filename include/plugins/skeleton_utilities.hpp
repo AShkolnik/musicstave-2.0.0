@@ -603,9 +603,10 @@ PyObject* create_skeleton_segment(PointVector* pvec, PointVector* bpvec)
   // declared static so this is initialized only once
   static PyObject* skeleton_segment_class = NULL;
   if (skeleton_segment_class == NULL) {
+    PyObject* class_name = PyBytes_FromString("SkeletonSegment");
+    PyObject* class_base = PyTuple_New(0);
     PyObject* class_dict = PyDict_New();
-    PyObject* class_name = PyString_FromString("SkeletonSegment");
-    skeleton_segment_class = PyClass_New(NULL, class_dict, class_name);
+    skeleton_segment_class = PyObject_CallFunctionObjArgs((PyObject*)&PyType_Type, class_name, class_base, class_dict, NULL);
   }
 
   // set points and collect some properties
@@ -636,23 +637,23 @@ PyObject* create_skeleton_segment(PointVector* pvec, PointVector* bpvec)
 
   // set dimension properties
   PyObject* prop;
-  prop = PyInt_FromLong(left);
+  prop = PyLong_FromLong(left);
   PyDict_SetItemString(segment_dict, "offset_x", prop);
   Py_DECREF(prop);
-  prop = PyInt_FromLong(top);
+  prop = PyLong_FromLong(top);
   PyDict_SetItemString(segment_dict, "offset_y", prop);
   Py_DECREF(prop);
   if (pvec->size()) {
-    prop = PyInt_FromLong(right - left + 1);
+    prop = PyLong_FromLong(right - left + 1);
   } else {
-    prop = PyInt_FromLong(0);
+    prop = PyLong_FromLong(0);
   }
   PyDict_SetItemString(segment_dict, "ncols", prop);
   Py_DECREF(prop);
   if (pvec->size()) {
-    prop = PyInt_FromLong(bot - top + 1);
+    prop = PyLong_FromLong(bot - top + 1);
   } else {
-    prop = PyInt_FromLong(0);
+    prop = PyLong_FromLong(0);
   }
   PyDict_SetItemString(segment_dict, "nrows", prop);
   Py_DECREF(prop);
