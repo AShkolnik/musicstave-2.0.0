@@ -3,4 +3,5 @@ deletion.txt
 build
 __pycache__
 _*.cpp
+*.bak
 
